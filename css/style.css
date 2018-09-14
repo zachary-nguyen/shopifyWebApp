@@ -1,0 +1,51 @@
+body{
+  padding: 0;
+  margin: 0;
+}
+
+#pageTitle{
+  height: 125px;
+  text-align: center;
+  background-color: slateblue;
+}
+
+#searchText{
+  height: 32px;
+  width: 500px;
+  border-radius: 5px;
+  border: 1px solid black;
+
+}
+
+#searchFavoriteForm{
+ text-align: center;
+}
+
+#searchButtonId{
+  height: 40px;
+  width: 200px;
+  text-align: center;
+  font-size: 16px;
+  background-color: slateblue;
+  vertical-align: middle;
+  border-radius: 5px;
+}
+
+.left-half{
+  position: absolute;
+  left: 0px;
+  width: 50%;
+}
+
+.right-half{
+  background-color: lightpink;
+  right: 0px;
+  position: absolute;
+  height: 100%;
+  width: 50%;
+
+}
+
+.whiteFont{
+  color: white;
+}
