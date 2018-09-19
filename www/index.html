@@ -5,6 +5,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
   <title>Shopify Web Dev Challenge</title>
 </head>
+
 <body>
 <header class="vertical-align:middle">
   <div id="pageTitle" >
@@ -16,16 +17,24 @@
 <section class="container">
   <div class="left-half">
     <h2>
-      <form id="searchFavoriteForm" action="index.html">
+      <form id="searchFavoriteForm">
         <input id="searchText" type="text" name="favoriteGit" placeholder="Search Favorites...">
         <button type="button" id="searchButtonId" class="whiteFont"> Search </button>
       </form>
     </h2>
+    <table id="resultTable" style="width:100%">
+      <tr>
+        <th>Name</th>
+        <th>Language</th>
+        <th>Latest tag</th>
+        <th></th>
+      </tr>
+    </table>
   </div>
 
   <div class="right-half">
     <h2>
-    <table id="resultTable" style="width:100%">
+    <table id="favoriteTable" style="width:100%">
       <tr>
         <th>Name</th>
         <th>Language</th>
@@ -39,10 +48,63 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-  var searchValue = document.getElementBy
+
+
+  //Clear search on page reload
+  document.getElementById('searchText').value = '';
+
+  //Stop the force refresh on form
+  $(function() {
+      $("#searchFavoriteForm").submit(function() { return false; });
+  });
+
+  //Trigger search by pressing 'Enter'
+  var input = document.getElementById("searchText");
+  input.addEventListener("keyup",function(event){
+    // event.preventDefault();
+    if(event.keyCode == 13){
+      $("#searchButtonId").click();
+      console.log("12323");
+    }
+  });
+
+  //Find the top 10 search results and store them in table
   $("#searchButtonId").click(function(){
-      $.getJSON("https://api.github.com/search/repositories?q=Tetris",function(data){
-            console.log(data);
+    var searchValue = document.getElementById("searchText").value;
+    var searchResult = [];
+    var url = "https://api.github.com/search/repositories?q=" + searchValue;
+    console.log(url);
+      $.getJSON(url,function(data){
+            console.log(searchValue);
+            for(var i = 0; i<10; i++){
+                searchResult.push(data.items[i]);
+            }
+            console.log(searchResult);
+            var tr;
+            var nameLink;
+            var tagToAdd;
+            var add = "Add";
+            for(var i = 0; i< searchResult.length;i++){
+
+                  tr = $('<tr/>');
+                  tr.append("<td>" + searchResult[i].full_name + "</td>");
+                  tr.append("<td>" + searchResult[i].language +"</td>");
+                  //Fetch latest tag from tag_url
+
+                  $.getJSON(searchResult[i].tags_url,function(tag){
+                    if(tag[0]){
+                      tagToAdd = tag[0].name;
+                      console.log(tagToAdd);
+                    }else{
+                      tagToAdd = "-";
+                      console.log(tagToAdd);
+                    }
+                  });
+
+                  tr.append("<td>" + tagToAdd +"</td>");
+                  tr.append("<td>" + add +"</td>");
+                  $('#resultTable').append(tr);
+            }
       })
   });
 });
