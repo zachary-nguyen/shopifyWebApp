@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+  <title>Shopify Web Dev Challenge</title>
+</head>
+<body>
+<header class="vertical-align:middle">
+  <div id="pageTitle" >
+    <h1>
+      <font size="16" class="whiteFont">My GitHub Favorites</font>
+    </h1>
+  </div>
+</header>
+<section class="container">
+  <div class="left-half">
+    <h2>
+      <form id="searchFavoriteForm" action="index.html">
+        <input id="searchText" type="text" name="favoriteGit" placeholder="Search Favorites...">
+        <button type="button" id="searchButtonId" class="whiteFont"> Search </button>
+      </form>
+    </h2>
+  </div>
+
+  <div class="right-half">
+    <h2>
+    <table id="resultTable" style="width:100%">
+      <tr>
+        <th>Name</th>
+        <th>Language</th>
+        <th>Latest tag</th>
+        <th></th>
+      </tr>
+    </table>
+    </h2>
+  </div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var searchValue = document.getElementBy
+  $("#searchButtonId").click(function(){
+      $.getJSON("https://api.github.com/search/repositories?q=Tetris",function(data){
+            console.log(data);
+      })
+  });
+});
+</script>
+
+
+
+</body>
+</html>
